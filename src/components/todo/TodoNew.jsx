@@ -20,8 +20,8 @@ const TodoNew = ({ addNewTodo }) => {
                 value={valueInput}
             />
             <button className="todo-btn" style={{ cursor: "pointer" }} onClick={handleClick}>Add</button>
-            <div>My text input is: {valueInput}</div>
-        </div>
+            <div style={{ marginTop: "20px" }}>My text input is: {valueInput}</div>
+        </div >
     );
 }
 

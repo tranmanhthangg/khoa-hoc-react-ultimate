@@ -10,13 +10,6 @@ const App = () => {
     { id: 2, name: "Watching Yotube" }
   ]);
 
-  const hoidanit = "Eric";
-  const age = 25;
-  const data = {
-    address: "Hanoi",
-    country: "VietNam"
-  }
-
   const addNewTodo = (name) => {
     const newTodo = {
       id: randomIntFromInterval(1, 1000000),
@@ -34,7 +27,7 @@ const App = () => {
     <div className="todo-container">
       <div className="todo-title">Todo List</div>
       <TodoNew addNewTodo={addNewTodo} />
-      <TodoData name={hoidanit} age={age} data={data} todoList={todoList} />
+      <TodoData todoList={todoList} />
       <div className="todo-image">
         <img className="logo" src={reactLogo} />
       </div>
