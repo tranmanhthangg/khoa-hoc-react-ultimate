@@ -10,8 +10,6 @@ import UserPage from './pages/user.jsx';
 import ProductPage from './pages/product.jsx';
 import { createBrowserRouter, RouterProvider, } from "react-router-dom";
 
-
-
 const router = createBrowserRouter([
   {
     path: "/",
