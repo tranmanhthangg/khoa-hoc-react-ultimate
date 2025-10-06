@@ -15,7 +15,7 @@ const UserForm = ({ loadUser }) => {
         if (res.data) {
             notification.success({
                 message: "Create user",
-                description: "Tạo user thành công"
+                description: "Create complete."
             });
             resetAndCloseModal();
             await loadUser();

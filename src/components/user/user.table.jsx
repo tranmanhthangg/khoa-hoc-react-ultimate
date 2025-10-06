@@ -1,15 +1,33 @@
-import { Table } from 'antd';
+import { Table, Popconfirm, notification } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import UpdateUserModal from './update.user.modal';
 import ViewUserDetail from './view.user.detail';
+import { deleteUserAPI } from '../../service/api.service';
 import { useState } from 'react';
 
 const UserTable = ({ dataUser, loadUser }) => {
+    const [isOpenDetail, setIsOpenDetail] = useState(false);
+    const [dataDetail, setDataDetail] = useState(null);
+
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
     const [dataUpdate, setDataUpdate] = useState(null);
 
-    const [isOpenDetail, setIsOpenDetail] = useState(false);
-    const [dataDetail, setDataDetail] = useState(null);
+    const handleDeleteBtn = async (id) => {
+        const res = await deleteUserAPI(id);
+        if (res.data) {
+            notification.success({
+                message: "Delete a user",
+                description: "Delete complete."
+            });
+            await loadUser();
+        }
+        else {
+            notification.error({
+                message: "Error delete a user",
+                description: JSON.stringify(res.message)
+            });
+        }
+    }
 
     const columns = [
         {
@@ -38,7 +56,16 @@ const UserTable = ({ dataUser, loadUser }) => {
                         style={{ cursor: "pointer", color: "orange" }}
                         onClick={(() => { setIsModalUpdateOpen(true); setDataUpdate(record) })}
                     />
-                    <DeleteOutlined style={{ cursor: "pointer", color: "red" }} />
+                    <Popconfirm
+                        title="Delete a user"
+                        description="Are you sure to delete this user?"
+                        placement="left"
+                        onConfirm={() => handleDeleteBtn(record._id)}
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <DeleteOutlined style={{ cursor: "pointer", color: "red" }} />
+                    </Popconfirm>
                 </div>
             ),
         }

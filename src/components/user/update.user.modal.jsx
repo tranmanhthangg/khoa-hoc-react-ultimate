@@ -15,12 +15,12 @@ const UpdateUserModal = ({ isModalUpdateOpen, setIsModalUpdateOpen, dataUpdate, 
         }
     }, [dataUpdate]);
 
-    const handleSubmitBtn = async () => {
+    const handleUpdateBtn = async () => {
         const res = await updateUserAPI(id, fullName, phone);
         if (res.data) {
             notification.success({
                 message: "Update a user",
-                description: "Cập nhật user thành công"
+                description: "Update complete."
             });
             resetAndCloseModal();
             await loadUser();
@@ -42,7 +42,7 @@ const UpdateUserModal = ({ isModalUpdateOpen, setIsModalUpdateOpen, dataUpdate, 
     }
 
     return (
-        <Modal title="Update a user" okText="SAVE" open={isModalUpdateOpen} maskClosable={false} onOk={() => handleSubmitBtn()} onCancel={() => setIsModalUpdateOpen(false)}>
+        <Modal title="Update a user" okText="SAVE" open={isModalUpdateOpen} maskClosable={false} onOk={() => handleUpdateBtn()} onCancel={() => setIsModalUpdateOpen(false)}>
             <div style={{ display: "flex", gap: "10px", flexDirection: "column" }}>
                 <div>
                     <span>ID:</span>
