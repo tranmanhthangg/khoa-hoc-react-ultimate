@@ -35,10 +35,6 @@ const UpdateUserModal = ({ isModalUpdateOpen, setIsModalUpdateOpen, dataUpdate, 
 
     const resetAndCloseModal = () => {
         setIsModalUpdateOpen(false);
-        setFullName("");
-        setID("");
-        setPhone("");
-        setDataUpdate(null);
     }
 
     return (
