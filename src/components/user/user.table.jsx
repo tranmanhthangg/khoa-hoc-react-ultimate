@@ -35,7 +35,7 @@ const UserTable = ({ dataUser, loadUser, current, pageSize, total, setCurrent, s
             dataIndex: 'stt',
             render: (_, record, index) => (
                 <>
-                    {index + 1}
+                    {(index + 1) + (current - 1) * pageSize}
                 </>
             ),
         },
@@ -81,6 +81,16 @@ const UserTable = ({ dataUser, loadUser, current, pageSize, total, setCurrent, s
     ];
 
     const onChange = (pagination, filters, sorter, extra) => {
+        if (pagination && pagination.current) {
+            if (+pagination.current !== +current) {
+                setCurrent(+pagination.current) // "5" -> 5 đảm bảo so sánh số, tránh lỗi
+            }
+        }
+        if (pagination && pagination.pageSize) {
+            if (+pagination.pageSize !== +pageSize) {
+                setPageSize(+pagination.pageSize)
+            }
+        }
         console.log("check", { pagination, filters, sorter, extra })
     };
 
