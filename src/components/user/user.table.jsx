@@ -31,6 +31,15 @@ const UserTable = ({ dataUser, loadUser }) => {
 
     const columns = [
         {
+            title: 'STT',
+            dataIndex: 'stt',
+            render: (_, record, index) => (
+                <>
+                    {index + 1}
+                </>
+            ),
+        },
+        {
             title: 'ID',
             dataIndex: '_id',
             render: (_, record) => (
