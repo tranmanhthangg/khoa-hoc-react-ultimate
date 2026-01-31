@@ -1,7 +1,8 @@
-import { Drawer, Button } from "antd";
+import { Drawer, Button, notification } from "antd";
 import { useState } from "react";
+import { handleUploadFile, updateUserAvatar } from "../../service/api.service";
 
-const ViewUserDetail = ({ isOpenDetail, setIsOpendetail, dataDetail, setDataDetail }) => {
+const ViewUserDetail = ({ isOpenDetail, setIsOpendetail, dataDetail, setDataDetail, loadUser }) => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [preview, setPreview] = useState(null);
 
@@ -18,7 +19,35 @@ const ViewUserDetail = ({ isOpenDetail, setIsOpendetail, dataDetail, setDataDeta
         }
     }
 
-    console.log("checkk file:", preview)
+    const handleUpdateUserAvatar = async () => {
+        const resUpload = await handleUploadFile(selectedFile, "avatar");
+        if (resUpload.data) {
+            const newAvatar = resUpload.data.fileUploaded;
+            const resUpdateAvatar = await updateUserAvatar(dataDetail._id, dataDetail.fullName, dataDetail.phone, newAvatar);
+            if (resUpdateAvatar.data) {
+                notification.success({
+                    message: "Update user avatar",
+                    description: "Update complete."
+                });
+                setIsOpendetail(false);
+                setSelectedFile(null);
+                setPreview(null);
+                await loadUser();
+            }
+            else {
+                notification.error({
+                    message: "Error update avatar",
+                    description: JSON.stringify(resUpdateAvatar.message)
+                });
+            }
+        }
+        else {
+            notification.error({
+                message: "Error upload file",
+                description: JSON.stringify(resUpload.message)
+            })
+        }
+    }
 
     return (
         <>
@@ -58,14 +87,22 @@ const ViewUserDetail = ({ isOpenDetail, setIsOpendetail, dataDetail, setDataDeta
                             <input type="file" hidden id="btn-upload-avatar" onChange={handleOnChangeFile} />
                         </div>
                         {preview &&
-                            <div style={{
-                                margin: "20px auto",
-                                height: "180px",
-                                width: "180px",
-                                border: "1px solid #ccc"
-                            }}>
-                                <img style={{ height: "100%", width: "100%", objectFit: "contain" }} src={preview} />
-                            </div>
+                            <>
+                                <div style={{
+                                    margin: "20px auto",
+                                    height: "180px",
+                                    width: "180px",
+                                    border: "1px solid #ccc"
+                                }}>
+                                    <img style={{ height: "100%", width: "100%", objectFit: "contain" }} src={preview} />
+                                </div>
+                                <Button style={{ display: "block", margin: "0 auto" }}
+                                    type="primary"
+                                    onClick={handleUpdateUserAvatar}
+                                >
+                                    Save
+                                </Button>
+                            </>
                         }
 
                     </>
