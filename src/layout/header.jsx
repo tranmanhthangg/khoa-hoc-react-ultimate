@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Menu } from 'antd';
-import { HomeOutlined, UsergroupAddOutlined, BookOutlined } from '@ant-design/icons';
+import { HomeOutlined, UsergroupAddOutlined, BookOutlined, SettingOutlined } from '@ant-design/icons';
 
 const Header = () => {
     const [current, setCurrent] = useState("home");
@@ -26,6 +26,21 @@ const Header = () => {
             key: 'books',
             icon: <BookOutlined />,
         },
+        {
+            label: "Setting",
+            key: 'setting',
+            icon: <SettingOutlined />,
+            children: [
+                {
+                    label: <Link to={"/login"}>Login</Link>,
+                    key: 'login'
+                },
+                {
+                    label: "Logout",
+                    key: 'logout'
+                },
+            ]
+        }
     ];
     return (
         <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />

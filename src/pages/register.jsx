@@ -1,6 +1,6 @@
-import { Button, Input, Form, notification, Row, Col } from 'antd';
+import { Button, Input, Form, notification, Row, Col, Divider } from 'antd';
 import { registerUserAPI } from '../service/api.service';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const RegisterPage = () => {
     const [form] = Form.useForm();
@@ -12,7 +12,7 @@ const RegisterPage = () => {
         if (res.data) {
             notification.success({
                 message: "Register user",
-                description: "Đăng kí user thành công"
+                description: "Register user complete."
             });
             navigate("/login");
         }
@@ -25,14 +25,15 @@ const RegisterPage = () => {
     }
 
     return (
-        <Form
-            form={form}
-            layout="vertical"
-            onFinish={onFinish}
-        // onFinishFailed={onFinishFailed}
-        >
-            <Row justify={"center"}>
-                <Col xs={24} md={8}>
+        <Row justify={'center'}>
+            <Col xs={24} md={8}>
+                <Form
+                    form={form}
+                    layout="vertical"
+                    style={{ marginTop: '20px' }}
+                    onFinish={onFinish}
+                >
+                    <h2 style={{ textAlign: 'center' }} >Register an account</h2>
                     <Form.Item
                         label="Full Name:"
                         name="fullName"
@@ -40,49 +41,55 @@ const RegisterPage = () => {
                     >
                         <Input />
                     </Form.Item>
-                </Col>
-            </Row>
-            <Row justify={"center"}>
-                <Col xs={24} md={8}>
                     <Form.Item
                         label="Email:"
                         name="email"
-                        rules={[{ required: true, message: 'Please input your username!' }]}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your email!'
+                            },
+                            {
+                                type: 'email',
+                                message: 'Wrong format'
+                            }
+                        ]}
                     >
                         <Input />
                     </Form.Item>
-                </Col>
-            </Row>
-            <Row justify={"center"}>
-                <Col xs={24} md={8}>
                     <Form.Item
                         label="Password:"
                         name="password"
-                        rules={[{ required: true, message: 'Please input your username!' }]}
+                        rules={[{ required: true, message: 'Please input your password!' }]}
                     >
                         <Input.Password />
                     </Form.Item>
-                </Col>
-            </Row>
-            <Row justify={"center"}>
-                <Col xs={24} md={8}>
                     <Form.Item
                         label="Phone Number:"
                         name="phone"
-                        rules={[{ pattern: new RegExp(/\d+/g), message: 'Wrong format!' }]}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your phone!'
+                            },
+                            {
+                                pattern: /^[0-9]+$/,
+                                message: 'Wrong format!'
+
+                            }
+                        ]}
                     >
                         <Input />
                     </Form.Item>
-                </Col>
-            </Row>
-            <Row justify={"center"}>
-                <Col xs={24} md={8} >
                     <div>
                         <Button type='primary' onClick={() => form.submit()}>Register</Button>
                     </div>
-                </Col>
-            </Row>
-        </Form>
+                    <Divider />
+                    <div>Already have an account? <Link to={"/login"}>Log in here.</Link></div>
+                </Form>
+            </Col>
+        </Row>
+
     );
 }
 
