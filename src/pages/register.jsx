@@ -17,7 +17,7 @@ const RegisterPage = () => {
             navigate("/login");
         }
         else {
-            notification.success({
+            notification.error({
                 message: "Register user error",
                 description: JSON.stringify(res.message)
             });
