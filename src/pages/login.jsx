@@ -9,7 +9,6 @@ const LoginPage = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const { setUser } = useContext(AuthContext);
 
     const onFinish = async (values) => {
         setLoading(true);
@@ -17,7 +16,6 @@ const LoginPage = () => {
         if (res.data) {
             message.success("Login complete.");
             localStorage.setItem("access_token", res.data.access_token);
-            setUser(res.data.user);
             navigate("/");
         }
         else {
@@ -60,7 +58,7 @@ const LoginPage = () => {
                             name="password"
                             rules={[{ required: true, message: 'Please input your password!' }]}
                         >
-                            <Input.Password />
+                            <Input.Password onKeyDown={(event) => { if (event.key === "Enter") form.submit() }} />
                         </Form.Item>
 
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
