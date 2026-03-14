@@ -32,12 +32,12 @@ const UserTable = ({ dataUser, loadUser, current, pageSize, total, setCurrent, s
     const columns = [
         {
             title: 'STT',
-            dataIndex: 'stt',
+            key: 'stt',
             render: (_, record, index) => (
                 <>
                     {(index + 1) + (current - 1) * pageSize}
                 </>
-            ),
+            )
         },
         {
             title: 'ID',
@@ -46,7 +46,7 @@ const UserTable = ({ dataUser, loadUser, current, pageSize, total, setCurrent, s
                 <>
                     <a href='#' onClick={() => { setIsOpenDetail(true); setDataDetail(record) }}>{record._id}</a>
                 </>
-            ),
+            )
         },
         {
             title: 'Full Name',
@@ -76,11 +76,11 @@ const UserTable = ({ dataUser, loadUser, current, pageSize, total, setCurrent, s
                         <DeleteOutlined style={{ cursor: "pointer", color: "red" }} />
                     </Popconfirm>
                 </div>
-            ),
+            )
         }
     ];
 
-    const onChange = (pagination, filters, sorter, extra) => {
+    const onChange = (pagination) => {
         if (pagination && pagination.current) {
             if (+pagination.current !== +current) {
                 setCurrent(+pagination.current) // "5" -> 5 đảm bảo so sánh số, tránh lỗi
@@ -91,7 +91,6 @@ const UserTable = ({ dataUser, loadUser, current, pageSize, total, setCurrent, s
                 setPageSize(+pagination.pageSize)
             }
         }
-        console.log("check", { pagination, filters, sorter, extra })
     };
 
     return (

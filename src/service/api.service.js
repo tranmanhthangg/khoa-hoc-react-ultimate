@@ -87,6 +87,11 @@ const logoutAPI = () => {
     return axios.post(URL_BACKEND);
 }
 
+const fetchAllBookAPI = (current, pageSize) => {
+    const URL_BACKEND = `/api/v1/book?current=${current}&pageSize=${pageSize}`;
+    return axios.get(URL_BACKEND);
+}
+
 export {
     createUserAPI,
     fetchAllUserAPI,
@@ -97,5 +102,6 @@ export {
     registerUserAPI,
     loginAPI,
     getAccountAPI,
-    logoutAPI
+    logoutAPI,
+    fetchAllBookAPI
 };
