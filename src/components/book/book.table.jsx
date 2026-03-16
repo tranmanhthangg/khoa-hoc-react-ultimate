@@ -1,7 +1,11 @@
 import { Table } from "antd";
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { useState } from "react";
+import BookDetail from "./view.book.detail";
 
 const BookTable = ({ dataBook, loadBook, current, pageSize, total, setCurrent, setPageSize }) => {
+    const [openBookDetail, setOpenBookDetail] = useState(false);
+    const [dataBookDetail, setDataBookDetail] = useState(null);
 
     const columns = [
         {
@@ -16,6 +20,9 @@ const BookTable = ({ dataBook, loadBook, current, pageSize, total, setCurrent, s
         {
             title: 'ID',
             dataIndex: '_id',
+            render: (_, record) => (
+                <a onClick={() => { setOpenBookDetail(true); setDataBookDetail(record); console.log(record) }}>{record._id}</a>
+            )
         },
         {
             title: 'Title',
@@ -64,20 +71,29 @@ const BookTable = ({ dataBook, loadBook, current, pageSize, total, setCurrent, s
     };
 
     return (
-        <Table
-            dataSource={dataBook}
-            columns={columns}
-            rowKey={"_id"}
-            pagination={
-                {
-                    current: current,
-                    pageSize: pageSize,
-                    showSizeChanger: true,
-                    total: total,
-                    showTotal: (total, range) => (<div>{range[0]} - {range[1]} on {total} rows</div>)
-                }}
-            onChange={onChange}
-        />
+        <>
+            <Table
+                dataSource={dataBook}
+                columns={columns}
+                rowKey={"_id"}
+                pagination={
+                    {
+                        current: current,
+                        pageSize: pageSize,
+                        showSizeChanger: true,
+                        total: total,
+                        showTotal: (total, range) => (<div>{range[0]} - {range[1]} on {total} rows</div>)
+                    }}
+                onChange={onChange}
+            />
+            <BookDetail
+                openBookDetail={openBookDetail}
+                setOpenBookDetail={setOpenBookDetail}
+                dataBookDetail={dataBookDetail}
+                setDataBookDetail={setDataBookDetail}
+                loadBook={loadBook}
+            />
+        </>
     );
 }
 
