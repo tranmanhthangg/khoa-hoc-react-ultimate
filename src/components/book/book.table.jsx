@@ -2,10 +2,13 @@ import { Table } from "antd";
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useState } from "react";
 import BookDetail from "./view.book.detail";
+import BookUpdate from "./book.update";
 
 const BookTable = ({ dataBook, loadBook, current, pageSize, total, setCurrent, setPageSize }) => {
     const [openBookDetail, setOpenBookDetail] = useState(false);
     const [dataBookDetail, setDataBookDetail] = useState(null);
+    const [openBookUpdate, setOpenBookUpdate] = useState(false);
+    const [dataBookUpdate, setDataBookUpdate] = useState(null)
 
     const columns = [
         {
@@ -50,7 +53,7 @@ const BookTable = ({ dataBook, loadBook, current, pageSize, total, setCurrent, s
             key: 'action',
             render: (_, record) => (
                 <div style={{ display: "flex", gap: "20px" }}>
-                    <EditOutlined style={{ cursor: "pointer", color: "orange" }} />
+                    <EditOutlined style={{ cursor: "pointer", color: "orange" }} onClick={() => { setOpenBookUpdate(true); setDataBookUpdate(record) }} />
                     <DeleteOutlined style={{ cursor: "pointer", color: "red" }} />
                 </div>
             )
@@ -91,6 +94,13 @@ const BookTable = ({ dataBook, loadBook, current, pageSize, total, setCurrent, s
                 setOpenBookDetail={setOpenBookDetail}
                 dataBookDetail={dataBookDetail}
                 setDataBookDetail={setDataBookDetail}
+                loadBook={loadBook}
+            />
+            <BookUpdate
+                openBookUpdate={openBookUpdate}
+                setOpenBookUpdate={setOpenBookUpdate}
+                dataBookUpdate={dataBookUpdate}
+                setDataBookUpdate={dataBookUpdate}
                 loadBook={loadBook}
             />
         </>

@@ -28,7 +28,7 @@ const BookPage = () => {
     return (
         <div style={{ padding: "20px" }}>
             {/* <BookForm loadBook={loadBook} /> */}
-            <BookFormUnControl loadBool={loadBook} />
+            <BookFormUnControl loadBook={loadBook} />
             <BookTable dataBook={dataBook}
                 loadBook={loadBook}
                 current={current}

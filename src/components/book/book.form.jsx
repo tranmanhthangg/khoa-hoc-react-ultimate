@@ -73,7 +73,7 @@ const BookForm = ({ loadBook }) => {
                     <Button type="primary" onClick={() => { setIsModalOpen(true) }}>Create Book</Button>
                 </div>
             </div >
-            <Modal title="Create Book" okText="CREATE" maskClosable={false} open={isModalOpen} onOk={handleOk} onCancel={(handleCancel)}>
+            <Modal title="Create Book" okText="CREATE" maskClosable={false} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                     <div>
                         <span>Title:</span>
@@ -128,7 +128,7 @@ const BookForm = ({ loadBook }) => {
                         </label>
                         <input type="file" hidden id="btn-upload-avatar"
                             onChange={handleUploadThumbnail}
-                            onClick={(even) => even.target.value = null}
+                            onClick={(event) => event.target.value = null}
                         />
                         {preview &&
                             <div style={{
