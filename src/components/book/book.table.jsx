@@ -3,6 +3,7 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useState } from "react";
 import BookDetail from "./view.book.detail";
 import BookUpdate from "./book.update";
+import BookUpdateUnControl from "./book.update.uncontrol";
 
 const BookTable = ({ dataBook, loadBook, current, pageSize, total, setCurrent, setPageSize }) => {
     const [openBookDetail, setOpenBookDetail] = useState(false);
@@ -96,7 +97,14 @@ const BookTable = ({ dataBook, loadBook, current, pageSize, total, setCurrent, s
                 setDataBookDetail={setDataBookDetail}
                 loadBook={loadBook}
             />
-            <BookUpdate
+            {/* <BookUpdate
+                openBookUpdate={openBookUpdate}
+                setOpenBookUpdate={setOpenBookUpdate}
+                dataBookUpdate={dataBookUpdate}
+                setDataBookUpdate={dataBookUpdate}
+                loadBook={loadBook}
+            /> */}
+            <BookUpdateUnControl
                 openBookUpdate={openBookUpdate}
                 setOpenBookUpdate={setOpenBookUpdate}
                 dataBookUpdate={dataBookUpdate}
