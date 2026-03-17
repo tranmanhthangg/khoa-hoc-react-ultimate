@@ -1,15 +1,34 @@
-import { Table } from "antd";
+import { Table, Popconfirm, notification, message } from "antd";
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useState } from "react";
 import BookDetail from "./view.book.detail";
 import BookUpdate from "./book.update";
 import BookUpdateUnControl from "./book.update.uncontrol";
+import { deleteBookAPI } from "../../service/api.service";
 
 const BookTable = ({ dataBook, loadBook, current, pageSize, total, setCurrent, setPageSize }) => {
     const [openBookDetail, setOpenBookDetail] = useState(false);
     const [dataBookDetail, setDataBookDetail] = useState(null);
     const [openBookUpdate, setOpenBookUpdate] = useState(false);
-    const [dataBookUpdate, setDataBookUpdate] = useState(null)
+    const [dataBookUpdate, setDataBookUpdate] = useState(null);
+
+    const handlDeleteBook = async (id) => {
+        const res = await deleteBookAPI(id);
+        if (res.data) {
+            notification.success({
+                message: "Delete a book",
+                description: "Delete complete."
+
+            });
+            await loadBook();
+        }
+        else {
+            notification.error({
+                message: "Error delete a book",
+                description: JSON.stringify(res.message)
+            });
+        }
+    }
 
     const columns = [
         {
@@ -55,8 +74,17 @@ const BookTable = ({ dataBook, loadBook, current, pageSize, total, setCurrent, s
             render: (_, record) => (
                 <div style={{ display: "flex", gap: "20px" }}>
                     <EditOutlined style={{ cursor: "pointer", color: "orange" }} onClick={() => { setOpenBookUpdate(true); setDataBookUpdate(record) }} />
-                    <DeleteOutlined style={{ cursor: "pointer", color: "red" }} />
-                </div>
+                    <Popconfirm
+                        title="Delete the book"
+                        description="Are you sure to delete this book?"
+                        placement="left"
+                        onConfirm={() => handlDeleteBook(record._id)}
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <DeleteOutlined style={{ cursor: "pointer", color: "red" }} />
+                    </Popconfirm>
+                </div >
             )
         }
     ];
